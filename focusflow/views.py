@@ -5,7 +5,7 @@ import json
 from .models import Tarea
 
 @csrf_exempt
-def tareas(request):
+def crear_tarea(request):
     if request.method == "GET":
         tareas = list(Tarea.objects.values())
         return JsonResponse(tareas, safe=False)
