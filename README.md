@@ -4,12 +4,12 @@ Proyecto básico creado con Django.
 
 ---
 
-## 🚀 Requisitos
+Instrucciones
 
 - Python 3.10 o superior
 - Git
 
-Verificar versión de Python:
+Pasos para levantar proyecto
 
 ```bash
 python --version
