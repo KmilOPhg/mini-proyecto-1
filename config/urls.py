@@ -1,8 +1,10 @@
 from django.contrib import admin
-from django.urls import path
-from focusflow.views import crear_tarea
+from django.urls import path, include
+from focusflow.views import VistaTarea
 
+#Aqui es como empieza la ruta
+#EJEMPLO tareas/ (ir a urls de focusflow))
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/tareas/", crear_tarea),
+    path("tareas/", include('focusflow.urls')),
 ]
