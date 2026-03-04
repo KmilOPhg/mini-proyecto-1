@@ -9,6 +9,8 @@ class TareaSerializer(serializers.ModelSerializer):
         model = Tarea
         fields = '__all__'
 
+    #subtareas = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     def get_subtareas(self, obj):
         # Buscamos las tareas cuyo padre sea la tarea actual
         hijos = Tarea.objects.filter(parent=obj)

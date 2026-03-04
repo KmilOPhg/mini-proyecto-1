@@ -6,7 +6,12 @@ from rest_framework.response import Response
 
 class VistaTarea(viewsets.ModelViewSet):
     serializer_class = TareaSerializer
-    queryset = Tarea.objects.all()
+
+    def get_queryset(self):
+        # Traemos las que no tienen padre
+        if self.action == 'list':
+            return Tarea.objects.filter(parent__isnull=True).prefetch_related('subtareas')
+        return Tarea.objects.all()
 
     # Mensaje al crear una tarea
     def create(self, request, *args, **kwargs):
