@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Tarea(models.Model):
     nombre = models.CharField(max_length=100, help_text="El nombre descriptivo de la tarea")
@@ -6,6 +7,7 @@ class Tarea(models.Model):
     descripcion = models.CharField(max_length=100, null=True, blank=True, help_text="La descripción de la tarea")
     completada = models.BooleanField(default=False, help_text="Casilla para marcar la tarea como completa")
     fecha_entrega = models.DateTimeField(null=True, blank=True, help_text="Formato: AAAA-MM-DD HH:MM:SS")
+    fecha_creacion = models.DateTimeField(default=timezone.now, help_text= "Fecha de creacion de la tarea")
     carga_mental = models.CharField(null=True, blank=True, max_length=100, help_text="Carga mental (1-5)")
 
     # Definimos el parent arriba
