@@ -26,7 +26,7 @@ class Tarea(models.Model):
         help_text="Selecciona el tipo de tarea"
     )
 
-    curso = models.CharField(null=True, blank=True, max_length=255, help_text="Casilla para el curso")
+    curso = models.CharField(default="Sin definir",  max_length=255, help_text="Casilla para el curso")
 
     parent = models.ForeignKey(
         'self',
