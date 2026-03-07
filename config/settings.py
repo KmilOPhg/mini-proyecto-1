@@ -121,4 +121,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Esta es la línea que te falta y que causa el error:
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Opcional: si tienes una carpeta de estáticos en la raíz
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
