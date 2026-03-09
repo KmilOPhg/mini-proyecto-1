@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Tarea(models.Model):
@@ -35,6 +36,15 @@ class Tarea(models.Model):
         blank=True,
         related_name='subtareas',
         help_text="ID de la tarea padre"
+    )
+
+    # Relacionamos la tarea con un usuario
+    usuario = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='tareas',
+        null=True, # Migrar si ya hay datos
+        blank=True
     )
 
     def save(self, *args, **kwargs):
