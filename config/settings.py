@@ -3,6 +3,7 @@ from pathlib import Path
 from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -109,6 +110,17 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+}
+
+# Configuración Simple JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),   # Token de acceso dura 12 horas
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),    # Token de refresh dura 7 días
+    "ROTATE_REFRESH_TOKENS": True,                 # Renueva refresh token automáticamente
+    "BLACKLIST_AFTER_ROTATION": True,              # Revoca el refresh token usado
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 SPECTACULAR_SETTINGS = {
