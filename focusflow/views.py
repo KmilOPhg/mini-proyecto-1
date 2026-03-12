@@ -2,6 +2,50 @@ from rest_framework import viewsets, status, generics, permissions
 from focusflow.serializer import TareaSerializer, RegistroSerializer
 from .models import Tarea
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+
+#VISTA LOGIN
+class VistaLoginPersonalizada(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        # 0. Verificar si los campos vienen vacíos (validación básica)
+        if not username or not password:
+            return Response({
+                "error_type": "validation",
+                "mensaje": "Por favor, completa todos los campos."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # 1. Verificar si el usuario existe
+        try:
+            user_obj = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({
+                "error_type": "username",
+                "mensaje": f"El usuario '{username}' no está registrado en FocusFlow."
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        # 2. Verificar si la contraseña es correcta
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return Response({
+                "error_type": "password",
+                "mensaje": "La contraseña ingresada es incorrecta."
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        # 3. Generar tokens si todo está OK
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "mensaje": "Inicio de sesión exitoso"
+        }, status=status.HTTP_200_OK)
 
 # VISTA DE REGISTRO
 class VistaRegistro(generics.CreateAPIView):
